@@ -3,8 +3,6 @@ endpoint:
 
 model:
   user: 
-    type: property
-    value: login
+    map: login
   password:
-    type: property
-    value: password
+    map: password

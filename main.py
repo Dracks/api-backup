@@ -2,19 +2,19 @@
 import argparse
 import yaml
 import sys
+import os
 
 from model_service import ModelService
 from auth import auth_methods
 
 class BackupTool:
-    def __init__(self, config):
-        self.models_service = ModelService(config.get('server'))
+    def __init__(self, config, path):
+        self.models_service = ModelService(config.get('server'), path)
         session = config.get('session')
         session_type = auth_methods.get(session.get('type'))
         self.session_manager = session_type(self.models_service, session)
         self.models_list = config.get('models')
         self.folder = config.get('folder')
-        
 
     def backup(self):
         self.session_manager.authenticate()
@@ -43,7 +43,7 @@ def main():
     with open(args.config) as f:
         defaultConfig = yaml.load(f)
     
-    backup = BackupTool(defaultConfig)
+    backup = BackupTool(defaultConfig, os.path.dirname(os.path.abspath(args.config)))
     if not args.restore:
         backup.backup()
     else:
