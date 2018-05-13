@@ -1,0 +1,12 @@
+endpoint:
+  name: /tag
+
+model: 
+  parent: 
+    type: foreign_key
+    model: tag
+
+  children:
+    type: ignore
+  filters:
+    type: ignore

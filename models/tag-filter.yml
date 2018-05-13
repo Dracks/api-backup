@@ -1,0 +1,7 @@
+endpoint:
+  name: /tag-filter
+
+model:
+  tag:
+    type: foreign_key
+    model: tag

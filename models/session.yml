@@ -1,0 +1,10 @@
+endpoint:
+  name: /session
+
+model:
+  user: 
+    type: property
+    value: login
+  password:
+    type: property
+    value: password

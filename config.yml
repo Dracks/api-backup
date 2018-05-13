@@ -1,0 +1,14 @@
+server: http://localhost:8000/api
+session:
+  type: rest/cookie
+  model: session
+  user: dracks
+  password: 123456
+
+folder: backups
+
+models:
+  - tag
+  - graph
+  - tag-filter
+  - rds

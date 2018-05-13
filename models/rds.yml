@@ -1,0 +1,9 @@
+endpoint:
+  name: /raw-data
+
+model:
+  tags:
+    type: array
+    contents:
+      type: foreign_key
+      model: tag

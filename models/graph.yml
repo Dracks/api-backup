@@ -1,0 +1,13 @@
+endpoint:
+  name: /graph
+
+model:
+  tag:
+    type: foreign_key
+    model: tag
+
+  horizontal_value:
+    type: array
+    contents:
+      type: foreign_key
+      model: tag
