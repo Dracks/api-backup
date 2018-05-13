@@ -33,7 +33,7 @@ class BackupTool:
                 print("ok")
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Backup data from finances-server and restore using the api')
     parser.add_argument('config', help='The configuration file to connect')
     parser.add_argument('-r', '--restore', action='store_true', default=False)
@@ -48,3 +48,6 @@ if __name__ == '__main__':
         backup.backup()
     else:
         backup.restore()
+
+if __name__ == '__main__':
+    main()
