@@ -4,7 +4,7 @@ import yaml
 import sys
 import os
 
-from model_service import ModelService
+from model import ModelService
 from auth import auth_methods
 
 class BackupTool:
