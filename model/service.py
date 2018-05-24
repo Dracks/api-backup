@@ -16,7 +16,7 @@ class ModelService:
         p=os.path.join(self.path,'models',model+'.yml')
         with open(p) as f:
             config = yaml.load(f)
-            return Model(self.session, self.server, config)
+            return Model(model, self.session, self.server, config)
 
     def get(self, model):
         m=self.__models.get(model, None)
