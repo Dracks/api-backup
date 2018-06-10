@@ -2,6 +2,7 @@ from unittest.mock import patch
 from unittest import TestCase
 import requests_mock
 import os
+import json
 
 from .. import ModelService
 
@@ -25,7 +26,12 @@ class ModelIntegrationTest(TestCase):
         self.assertEquals(len(data),1)
         self.assertEquals(data, [{"fuck":"data"}])
 
-    
+    def test_post_all_simple_model(self):
+        obj = self.subject.get('simple')
+        self.adapter.register_uri('POST', obj.endpoint, status_code=201, text='{"fuck":"data"}')
+        newData = obj.create({"ping":"pong"})
+        self.assertEquals({"ping": "pong"}, json.loads(self.adapter.last_request.body))
+        self.assertEquals({"fuck":"data"}, newData)
 
 
     
