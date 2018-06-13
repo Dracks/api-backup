@@ -2,7 +2,7 @@ from .collection import register_parser
 
 @register_parser
 class Identity():
-    def __init__(self, config=None):
+    def __init__(self, config=None, fk=None):
         pass
 
     def serialize(self, data):

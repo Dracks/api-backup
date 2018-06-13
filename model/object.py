@@ -7,7 +7,7 @@ identity = Identity()
 
 @register_parser
 class ObjectParser():
-    def __init__(self, config):
+    def __init__(self, config, fk):
         self.map = {}
         self.keys_map = {}
         self.keys_reverse = {}
@@ -18,7 +18,7 @@ class ObjectParser():
                 self.keys_reverse[map_key] = key
             t = c.get('type')
             if t is not None:
-                self.map[key] = parsers.get(t)(c)
+                self.map[key] = parsers.get(t)(c, fk)
     
     def serialize(self, data):
         return {
@@ -28,7 +28,7 @@ class ObjectParser():
 
     def unserialize(self, data):
         return {
-            self.keys_map.get(key, key): self.map.get(key, identity).serialize(value)
+            self.keys_map.get(key, key): self.map.get(key, identity).unserialize(value)
             for key, value in data.items()
         }
     

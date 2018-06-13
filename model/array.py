@@ -3,11 +3,11 @@ from .collection import register_parser, parsers
 
 @register_parser
 class ArrayParser:
-    def __init__(self, config):
+    def __init__(self, config, fk):
         content = config.get('content', {})
         t= content.get('type', 'identity')
         content_config = content.get('config', {})
-        self.content = parsers.get(t)(content_config)
+        self.content = parsers.get(t)(content_config, fk)
 
     def serialize(self, data):
         return [

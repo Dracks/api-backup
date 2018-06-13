@@ -1,0 +1,4 @@
+model:
+  simple:
+    type: foreign_key
+    model: simple

@@ -5,6 +5,7 @@ import os
 import json
 
 from .. import ModelService
+from .. import ForeignKeyNotAvailableException
 
 PATH = os.path.dirname(__file__)
 
@@ -33,5 +34,22 @@ class ModelIntegrationTest(TestCase):
         self.assertEquals({"ping": "pong"}, json.loads(self.adapter.last_request.body))
         self.assertEquals({"fuck":"data"}, newData)
 
+    def test_post_with_not_foreign_key(self):
+        obj = self.subject.get('foreign_key')
+        self.adapter.register_uri('POST', obj.endpoint, status_code=201, text='{"fuck":"data"}')
+        try:
+            obj.create({"simple":3})
+            self.assertFalse(True)
+        except ForeignKeyNotAvailableException as e:
+            self.assertTrue(True)
 
-    
+    def test_post_with_foreign_key(self):
+        simple = self.subject.get('simple')
+        self.adapter.register_uri('POST', simple.endpoint, status_code=201, text='{"id":35}')
+        obj = simple.create({"id":3})
+        self.assertEqual(obj.get('id'), 35)
+
+        obj = self.subject.get('foreign_key')
+        self.adapter.register_uri('POST', obj.endpoint, status_code=201, text='{"fuck":"data"}')
+        obj.create({"simple":3})
+        self.assertEquals({"simple": 35}, self.adapter.last_request.json())

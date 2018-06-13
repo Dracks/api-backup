@@ -1,0 +1,2 @@
+class ForeignKeyNotAvailableException(Exception):
+    pass 

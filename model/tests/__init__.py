@@ -3,10 +3,10 @@ import unittest
 
 from .. import parsers as subject
 
-def abstract_test(Subject, config, source, api_data):
+def abstract_test(Subject, config, source, api_data, fk={}):
     class AbstractParserTest(unittest.TestCase):
         def setUp(self):
-            self.subject = Subject(config)
+            self.subject = Subject(config, fk)
 
         def test_serialize(self):
             data = self.subject.serialize(source)
@@ -21,7 +21,7 @@ class RegisteringTest(unittest.TestCase):
     def test_register_object(self):
         s = subject.get('object')
         self.assertIsNotNone(s)
-        self.assertIsNotNone(s({}))
+        self.assertIsNotNone(s({}, None))
 
     def test_register_array(self):
         s = subject.get('array')
