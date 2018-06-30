@@ -4,7 +4,7 @@ import yaml
 import sys
 import os
 
-from model import ModelService
+from model import ModelService, ForeignKeyNotAvailableException
 from auth import auth_methods
 
 class BackupTool:
@@ -31,6 +31,41 @@ class BackupTool:
             with open(self.folder+'/'+name, 'w') as f:
                 f.write(yaml.dump(data))
                 print("ok")
+
+    def restore(self):
+        def create_or_true(model, data):
+            try:
+                model.create(data)
+            except ForeignKeyNotAvailableException:
+                return True
+            return False
+
+        self.session_manager.authenticate()
+        data = {}
+        for name in self.models_list:
+            with open(self.folder+'/'+name, 'r') as f:
+                data[name] = yaml.load(f.read())
+        apply_changes = True
+        while apply_changes:
+            apply_changes = False
+            for name in data.keys():
+                model = self.models_service.get(name)
+                l = data.get(name)
+                new_l = [ e for e in l if create_or_true(model, e)]
+                apply_changes = apply_changes or len(l) > len(new_l)
+                data[name] = new_l
+                
+            data = {
+                k: v
+                for k, v in data.items()
+                if len(v)>0
+            }
+        if len(data.keys())>0:
+            print("pending data: \n{}".format(yaml.dump(data)))
+
+
+
+
 
 
 def main():

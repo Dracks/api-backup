@@ -11,16 +11,27 @@ SOURCE = 3
 
 API_DATA = 3
 
-FOREIGN_KEYS = {
-    'pepe': {
-        3: 5
-    }
-}
 
-class ForeignKeyParserTest(abstract_test(Subject, CONFIG, SOURCE, API_DATA, FOREIGN_KEYS)):
+class ForeignKeyParserTest(abstract_test(Subject, CONFIG, SOURCE, API_DATA)):
+    def setUp(self):
+        self.fk={}
+        self.subject = Subject(CONFIG, self.fk)
+
     def test_serialize(self):
+        self.fk['pepe'][3]=5
         data = self.subject.serialize(SOURCE)
         self.assertEquals(5, data)
+
+    def test_serializer_2(self):
+        self.fk['pepe'] = {}
+        subject = Subject(CONFIG, self.fk)
+        self.fk['pepe'][3] = 5
+        data = subject.serialize(SOURCE)
+        self.assertEquals(5,data)
+
+    def test_serialize_null(self):
+        data = self.subject.serialize(None)
+        self.assertIsNone(data)
 
     def test_launch_exception(self):
         try:

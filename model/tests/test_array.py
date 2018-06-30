@@ -4,16 +4,14 @@ from .. import ArrayParser as Subject
 from . import abstract_test
 
 config = {
-        'content':{
-            'type': 'identity'
-        }
+        'type': 'identity'
     }
 ArrayParserTest = abstract_test(Subject, config, [1,2,3], [1,2,3])
 
 config = {
     'content':{
         'type': 'object',
-        'config': {
+        'config':{
             'property':{
                 'map': 'new'
             }

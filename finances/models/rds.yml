@@ -4,6 +4,6 @@ endpoint:
 model:
   tags:
     type: array
-    contents:
+    config:
       type: foreign_key
       model: tag

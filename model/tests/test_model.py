@@ -1,4 +1,3 @@
-from unittest.mock import patch
 from unittest import TestCase
 import requests_mock
 import os
