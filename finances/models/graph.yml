@@ -10,4 +10,5 @@ model:
     type: array
     contents:
       type: foreign_key
-      model: tag
+      config:
+        model: tag

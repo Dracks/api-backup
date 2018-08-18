@@ -5,7 +5,7 @@ from .collection import register_parser, parsers
 class ArrayParser:
     def __init__(self, config, fk):
         content = config.get('content', {})
-        t= content.get('type', 'identity')
+        t = content.get('type', 'identity')
         content_config = content.get('config', {})
         self.content = parsers.get(t)(content_config, fk)
 
